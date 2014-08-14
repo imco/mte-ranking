@@ -57,31 +57,27 @@ def actualizaRanking(grados,sql1,sql2):
 		data_por_cct = cursor.fetchall()
 		n = len(data_por_cct)
 		valores=[]
-		turnos=[]
-		mat=[]
-		esp=[]
 		pct_rep = 0
-		x = []
 		alumnos=0
 		poco_confiables = 0
 		i=0
 		while i< n/grados:
+			x = []
 			temp = revisaGrado(data_por_cct,i*grados,grados)
-			
+			turnos=str(temp[3])
 			if len(temp[0])==grados:
-				mat.append(sum(temp[0])/float(grados))
-				esp.append(sum(temp[1])/float(grados))
-				alumnos+=sum(temp[2])
-				turnos.append(str(temp[3]))
-				pct_rep =round( (sum(temp[4])+sum(temp[5]))/(float(2*alumnos)),6)
+				mat = sum(temp[0])/float(grados)
+				esp = sum(temp[1])/float(grados)
+				alumnos = sum(temp[2])
+				pct_rep = round( (sum(temp[4])+sum(temp[5]))/(float(2*alumnos)),6)
 				x.append(round( (sum(temp[6][0])+sum(temp[7][0]))/(float(2*alumnos)) ,6))
 				x.append(round( (sum(temp[6][1])+sum(temp[7][1]))/(float(2*alumnos)) ,6))
 				x.append(round( (sum(temp[6][2])+sum(temp[7][2]))/(float(2*alumnos)) ,6))
 				poco_confiables = int(sum(temp[8]))
 				
-				print [int(db_row[0]), mat[0],esp[0],mat[0]*.8 + esp[0]*.2, int(alumnos), int(turnos[0]), pct_rep ,x[0],x[1],x[2],poco_confiables]
+				print [int(db_row[0]), mat,esp,mat*.8 + esp*.2, int(alumnos), int(turnos), pct_rep ,x[0],x[1],x[2],poco_confiables]
 			else:
-				print [int(db_row[0]),0,0, 0, 0, 'NULL',0,0,0,0,0]
+				print [int(db_row[0]),0,0, 0, 0, int(turnos),0,0,0,0,0]
 			i+=1
 	gc.collect()
 	db.close()
