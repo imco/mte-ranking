@@ -25,5 +25,5 @@ with open(sys.argv[1], 'rb') as csvfile:
 		row = row[:2] + row[3:]
 
 		#calcula el porcentaje de (#alumnos evaluados / #alumnos programados)
-		row[-1] = int(row[2])/float(row[-1])
+		row.append(int(row[2])/float(row[-1]))
 		print row
