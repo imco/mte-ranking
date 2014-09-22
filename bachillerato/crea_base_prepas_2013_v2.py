@@ -20,5 +20,10 @@ with open(sys.argv[1], 'rb') as csvfile:
 				#son registros que no tienen extension sino nombres de lugares. creamos una clave para homologarlos de la siguiente manera:
 				#cct + primer caracter de la clave de turno + ultimas dos letras de la extension (sin espacios)
 				row[0] = row[0]+row[1][0:1]+row[2][-2:].strip()
+				
+		#quita la columna que tiene la extension de la escuela
 		row = row[:2] + row[3:]
+
+		#calcula el porcentaje de (#alumnos evaluados / #alumnos programados)
+		row[-1] = int(row[2])/float(row[-1])
 		print row
